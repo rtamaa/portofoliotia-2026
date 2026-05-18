@@ -6,18 +6,17 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up()
+    public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('theme')->nullable()->default('sunset');
-            $table->string('theme_color')->nullable();
+            $table->json('themes_settings')->nullable()->after('remember_token');
         });
     }
 
-    public function down()
+    public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['theme', 'theme_color']);
+            $table->dropColumn('themes_settings');
         });
     }
 };
