@@ -4,12 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Message extends Model
+class SocialLink extends Model
 {
     protected $fillable = [
-        'name',
-        'email',
-        'subject',
-        'message',
+        'platform',
+        'url',
+        'is_active',
     ];
 }

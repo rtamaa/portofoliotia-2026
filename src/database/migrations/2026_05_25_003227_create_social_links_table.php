@@ -8,17 +8,15 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('messages', function (Blueprint $table) {
+        Schema::create('social_links', function (Blueprint $table) {
 
             $table->id();
 
-            $table->string('name');
+            $table->string('platform');
 
-            $table->string('email');
+            $table->string('url');
 
-            $table->string('subject');
-
-            $table->longText('message');
+            $table->boolean('is_active')->default(true);
 
             $table->timestamps();
         });
@@ -26,6 +24,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('messages');
+        Schema::dropIfExists('social_links');
     }
 };

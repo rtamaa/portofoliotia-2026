@@ -14,12 +14,14 @@ use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\MaxWidth;
+
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+
 use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
 
 class AdminPanelProvider extends PanelProvider
@@ -28,75 +30,106 @@ class AdminPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
+
             ->id('admin')
+
             ->path('admin')
+
             ->spa()
+
             ->login()
+
             ->passwordReset()
-            ->profile(\App\Filament\Pages\Auth\EditProfile::class, isSimple: false)
+
+            ->profile(
+                \App\Filament\Pages\Auth\EditProfile::class,
+                isSimple: false
+            )
+
+            ->brandName('Portofolio Tia')
+
             ->defaultThemeMode(ThemeMode::Light)
+
             ->font('Montserrat')
+
             ->colors([
                 'primary' => Color::Blue,
             ])
+
             ->maxContentWidth(MaxWidth::SevenExtraLarge)
+
             ->sidebarCollapsibleOnDesktop()
-            ->discoverResources(in: app_path('Filament/Admin/Resources'), for: 'App\\Filament\\Admin\\Resources')
-            ->discoverPages(in: app_path('Filament/Admin/Pages'), for: 'App\\Filament\\Admin\\Pages')
+
+            ->discoverResources(
+                in: app_path('Filament/Admin/Resources'),
+                for: 'App\\Filament\\Admin\\Resources'
+            )
+
+            ->discoverPages(
+                in: app_path('Filament/Admin/Pages'),
+                for: 'App\\Filament\\Admin\\Pages'
+            )
+
+            ->discoverClusters(
+                in: app_path('Filament/Admin/Clusters'),
+                for: 'App\\Filament\\Admin\\Clusters'
+            )
+
+            ->discoverWidgets(
+                in: app_path('Filament/Admin/Widgets'),
+                for: 'App\\Filament\\Admin\\Widgets'
+            )
+
             ->pages([
                 Pages\Dashboard::class,
             ])
-            ->discoverClusters(in: app_path('Filament/Admin/Clusters'), for: 'App\\Filament\\Admin\\Clusters')
-            ->discoverWidgets(in: app_path('Filament/Admin/Widgets'), for: 'App\\Filament\\Admin\\Widgets')
-            ->widgets([
-                \Awcodes\Overlook\Widgets\OverlookWidget::class,
-            ])
+
             ->navigationGroups([
+
+                NavigationGroup::make()
+                    ->label('Portfolio'),
+
                 NavigationGroup::make()
                     ->label('Administration'),
+
             ])
+
             ->userMenuItems([
+
                 'profile' => MenuItem::make()
                     ->label(fn () => auth()->user()->name)
                     ->url(fn (): string => EditProfilePage::getUrl())
                     ->icon('heroicon-m-user-circle'),
-                // 'profile' => \Filament\Navigation\MenuItem::make()
-                //     ->label(fn () => auth()->user()->name)
-                //     ->icon('heroicon-m-user-circle'),
+
             ])
+
             ->plugins([
-                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make()
-                    ->gridColumns([
-                        'default' => 2,
-                        'lg' => 3,
-                    ])
-                    ->sectionColumnSpan(1)
-                    ->checkboxListColumns([
-                        'default' => 2,
-                        'lg' => 3,
-                    ])
-                    ->resourceCheckboxListColumns([
-                        'default' => 2,
-                        'lg' => 3,
-                    ]),
+
+                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
+
                 \Hasnayeen\Themes\ThemesPlugin::make(),
-                \Njxqlus\FilamentProgressbar\FilamentProgressbarPlugin::make()->color('#29b'),
+
+                \Njxqlus\FilamentProgressbar\FilamentProgressbarPlugin::make()
+                    ->color('#29b'),
+
                 \DiogoGPinto\AuthUIEnhancer\AuthUIEnhancerPlugin::make()
                     ->showEmptyPanelOnMobile(false)
                     ->formPanelPosition('right')
                     ->formPanelWidth('40%')
                     ->emptyPanelBackgroundImageOpacity('70%')
-                    ->emptyPanelBackgroundImageUrl('https://picsum.photos/seed/picsum/1260/750.webp/?blur=1'),
+                    ->emptyPanelBackgroundImageUrl(
+                        'https://picsum.photos/seed/picsum/1260/750.webp/?blur=1'
+                    ),
+
                 \Awcodes\LightSwitch\LightSwitchPlugin::make()
-                    ->position(\Awcodes\LightSwitch\Enums\Alignment::BottomCenter)
+                    ->position(
+                        \Awcodes\LightSwitch\Enums\Alignment::BottomCenter
+                    )
                     ->enabledOn([
                         'auth.login',
                         'auth.password',
                     ]),
-                \Awcodes\Overlook\OverlookPlugin::make()
-                    ->includes([
-                        \App\Filament\Admin\Resources\UserResource::class,
-                    ]),
+
                 \Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin::make()
                     ->slug('my-profile')
                     ->setTitle('My Profile')
@@ -105,11 +138,11 @@ class AdminPanelProvider extends PanelProvider
                     ->shouldShowSanctumTokens(false)
                     ->shouldShowBrowserSessionsForm()
                     ->shouldShowAvatarForm(),
+
             ])
-            ->resources([
-                config('filament-logger.activity_resource'),
-            ])
+
             ->viteTheme('resources/css/filament/admin/theme.css')
+
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
@@ -122,6 +155,7 @@ class AdminPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
                 \Hasnayeen\Themes\Http\Middleware\SetTheme::class,
             ])
+
             ->authMiddleware([
                 Authenticate::class,
             ]);

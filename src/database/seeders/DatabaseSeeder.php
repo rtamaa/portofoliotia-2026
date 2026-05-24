@@ -3,6 +3,10 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\Project;
+use Database\Seeders\RoleSeeder;
+use Database\Seeders\UserSeeder;
+use Database\Seeders\ProjectSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,10 +17,10 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             ProjectSeeder::class,
         ]);
-        
+
         $this->command->info('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
         $this->command->info('✅ SEEDER SELESAI!');
-        $this->command->info('📊 Total Projects: ' . \App\Models\Project::count());
+        $this->command->info('📊 Total Projects: ' . Project::count());
         $this->command->info('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
     }
 }
