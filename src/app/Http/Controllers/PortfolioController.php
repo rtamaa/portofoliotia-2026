@@ -6,6 +6,7 @@ use App\Models\Project;
 use App\Models\Service;
 use App\Models\Setting;
 use App\Models\SocialLink;
+use App\Models\Stats;
 
 class PortfolioController extends Controller
 {
@@ -13,15 +14,24 @@ class PortfolioController extends Controller
     {
         return view('home', [
 
-            'projects' => Project::where('is_active', true)->latest()->get(),
+            'projects' => Project::where('is_active', true)
+                ->latest()
+                ->get(),
 
             'services' => Service::where('is_active', true)
                 ->orderBy('order')
                 ->get(),
 
-            'socials' => SocialLink::where('is_active', true)->get(),
+            'socials' => SocialLink::where('is_active', true)
+                ->get(),
 
             'setting' => Setting::first(),
+
+            // ✅ ADD INI
+            'stats' => Stats::query()
+                ->where('is_active', true)
+                ->orderBy('sort')
+                ->get(),
 
         ]);
     }

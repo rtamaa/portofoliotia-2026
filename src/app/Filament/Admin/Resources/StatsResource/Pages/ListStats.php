@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Filament\Admin\Resources\StatsResource\Pages;
+
+use App\Filament\Admin\Resources\StatsResource;
+use Filament\Actions;
+use Filament\Resources\Pages\ListRecords;
+
+class ListStats extends ListRecords
+{
+    protected static string $resource = StatsResource::class;
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            Actions\CreateAction::make(),
+        ];
+    }
+}

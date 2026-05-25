@@ -494,6 +494,25 @@
 
             {!! $setting?->about !!}
 
+            {{-- ✅ STATS (TAMBAHAN BARU) --}}
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2rem;">
+
+                @foreach($stats as $stat)
+                    <div style="padding:1rem;border:1px solid #333;border-radius:12px;text-align:center;">
+
+                        <div style="font-size:2rem;font-weight:bold;">
+                            {{ $stat->value }}
+                        </div>
+
+                        <div style="color:#aaa;font-size:0.9rem;">
+                            {{ $stat->title }}
+                        </div>
+
+                    </div>
+                @endforeach
+
+            </div>
+
         </div>
 
         <div class="about-image">
