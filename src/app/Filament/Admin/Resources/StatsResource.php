@@ -18,6 +18,8 @@ class StatsResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
 
+    protected static ?string $navigationGroup = 'Portfolio';
+
     protected static ?string $navigationLabel = 'Stats';
 
     protected static ?string $pluralLabel = 'Stats';
