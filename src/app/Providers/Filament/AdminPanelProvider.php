@@ -85,13 +85,10 @@ class AdminPanelProvider extends PanelProvider
             ])
 
             ->navigationGroups([
-
-                NavigationGroup::make()
-                    ->label('Portfolio'),
-
                 NavigationGroup::make()
                     ->label('Administration'),
-
+                NavigationGroup::make()
+                    ->label('Portfolio'),
             ])
 
             ->userMenuItems([
@@ -158,6 +155,7 @@ class AdminPanelProvider extends PanelProvider
 
             ->authMiddleware([
                 Authenticate::class,
+                \Filament\Http\Middleware\Authenticate::class,
             ]);
     }
 }

@@ -229,6 +229,19 @@
             background:#111;
         }
 
+        .about-image {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding-right: 40px;
+        }
+
+        .about-image img {
+            width: 70%;
+            height: auto;
+            border-radius: 12px;
+        }
+
         .services-section{
             background:#0a0a0a;
         }
@@ -287,6 +300,18 @@
             padding:2rem;
             border-radius:20px;
             border:1px solid #222;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: #fff;
+        }
+
+        .service-card p {
+            color: #9ca3af; /* abu-abu modern */
+            line-height: 1.6;
         }
 
         .service-number{
@@ -471,7 +496,11 @@
 
         </div>
 
-        <div class="about-image"></div>
+        <div class="about-image">
+    @if($setting?->profile_image)
+        <img src="{{ Storage::url($setting->profile_image) }}" alt="Profile">
+    @endif
+</div>
 
     </div>
 
@@ -499,9 +528,9 @@
 
                     </div>
 
-                    <h3>
-                        {{ $service->title }}
-                    </h3>
+                    <h3 class="service-title">
+                    {{ $service->title }}
+                </h3>
 
                     <p>
                         {{ $service->description }}

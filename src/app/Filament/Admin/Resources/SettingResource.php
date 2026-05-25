@@ -19,6 +19,8 @@ class SettingResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationGroup = 'Portfolio';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -39,10 +41,7 @@ class SettingResource extends Resource
             Forms\Components\FileUpload::make('profile_image')
                 ->image()
                 ->disk('public')
-                ->directory('settings')
-                ->visibility('public')
-                ->imageEditor()
-                ->nullable(),
+                ->directory('settings'),
 
             Forms\Components\TextInput::make('email')
                 ->email()

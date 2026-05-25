@@ -3,27 +3,43 @@
 namespace App\Filament\Admin\Resources;
 
 use App\Filament\Admin\Resources\ServiceResource\Pages;
-use App\Filament\Admin\Resources\ServiceResource\RelationManagers;
 use App\Models\Service;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ServiceResource extends Resource
 {
     protected static ?string $model = Service::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
+
+    protected static ?string $navigationGroup = 'Portfolio';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('title')
+                    ->required()
+                    ->maxLength(255)
+                    ->placeholder('Web Development, UI/UX Design, etc'),
+
+                Forms\Components\Textarea::make('description')
+                    ->required()
+                    ->rows(4)
+                    ->columnSpanFull(),
+
+                Forms\Components\TextInput::make('order')
+                    ->numeric()
+                    ->default(0)
+                    ->label('Sort Order'),
+
+                Forms\Components\Toggle::make('is_active')
+                    ->label('Active')
+                    ->default(true),
             ]);
     }
 
@@ -31,13 +47,31 @@ class ServiceResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('title')
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('description')
+                    ->limit(50),
+
+                Tables\Columns\TextColumn::make('order')
+                    ->sortable(),
+
+                Tables\Columns\IconColumn::make('is_active')
+                    ->boolean(),
+
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('order', 'asc')
             ->filters([
-                //
+                Tables\Filters\TernaryFilter::make('is_active'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

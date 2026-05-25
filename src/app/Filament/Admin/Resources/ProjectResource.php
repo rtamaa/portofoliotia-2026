@@ -19,75 +19,83 @@ class ProjectResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-folder';
 
-    protected static ?string $navigationGroup = 'Content';
+    protected static ?string $navigationGroup = 'Portfolio';
 
     public static function form(Form $form): Form
-    {
-        return $form
-            ->schema([
+{
+    return $form
+        ->schema([
+            Forms\Components\Section::make('Basic Info')
+                ->schema([
+                    Forms\Components\TextInput::make('title')
+                        ->required()
+                        ->live(onBlur: true)
+                        ->afterStateUpdated(fn ($state, callable $set) =>
+                            $set('slug', \Illuminate\Support\Str::slug($state))
+                        ),
 
-                Forms\Components\TextInput::make('title')
-                    ->required()
-                    ->live(onBlur: true)
-                    ->afterStateUpdated(fn ($state, callable $set) =>
-                        $set('slug', \Illuminate\Support\Str::slug($state))
-                    ),
+                    Forms\Components\TextInput::make('slug')
+                        ->required()
+                        ->unique(ignoreRecord: true),
 
-                Forms\Components\TextInput::make('slug')
-                    ->required()
-                    ->unique(ignoreRecord: true),
+                    Forms\Components\TextInput::make('category')
+                        ->required(),
 
-                Forms\Components\TextInput::make('category')
-                    ->required(),
+                    Forms\Components\Textarea::make('short_description')
+                        ->rows(3),
+                ])
+                ->columns(2),
 
-                Forms\Components\Textarea::make('short_description')
-                    ->rows(3),
+            Forms\Components\Section::make('Content')
+                ->schema([
+                    Forms\Components\RichEditor::make('background'),
+                    Forms\Components\RichEditor::make('objective'),
+                    Forms\Components\RichEditor::make('features'),
+                ])
+                ->columns(1),
 
-                Forms\Components\RichEditor::make('background')
-                    ->columnSpanFull(),
+            Forms\Components\Section::make('Technical')
+                ->schema([
+                    Forms\Components\RichEditor::make('tech_stack'),
+                    Forms\Components\RichEditor::make('database_design'),
+                    Forms\Components\RichEditor::make('flowchart_desc'),
+                ])
+                ->columns(1),
 
-                Forms\Components\RichEditor::make('objective')
-                    ->columnSpanFull(),
+            Forms\Components\Section::make('Documentation')
+                ->schema([
+                    Forms\Components\RichEditor::make('documentation'),
+                    Forms\Components\RichEditor::make('conclusion'),
+                ])
+                ->columns(1),
 
-                Forms\Components\RichEditor::make('features')
-                    ->columnSpanFull(),
+            Forms\Components\Section::make('Media')
+                ->schema([
+                    Forms\Components\TagsInput::make('tags'),
 
-                Forms\Components\RichEditor::make('tech_stack')
-                    ->columnSpanFull(),
+                    Forms\Components\FileUpload::make('thumbnail')
+                        ->image()
+                        ->disk('public')
+                        ->directory('projects')
+                        ->imageEditor(),
 
-                Forms\Components\RichEditor::make('database_design')
-                    ->columnSpanFull(),
+                    Forms\Components\FileUpload::make('erd')
+                        ->image()
+                        ->disk('public')
+                        ->directory('projects/erd'),
 
-                Forms\Components\RichEditor::make('flowchart_desc')
-                    ->columnSpanFull(),
+                    Forms\Components\FileUpload::make('flowchart')
+                        ->image()
+                        ->disk('public')
+                        ->directory('projects/flowcharts'),
+                ])
+                ->columns(1),
 
-                Forms\Components\RichEditor::make('documentation')
-                    ->columnSpanFull(),
-
-                Forms\Components\RichEditor::make('conclusion')
-                    ->columnSpanFull(),
-
-                Forms\Components\TagsInput::make('tags'),
-
-                Forms\Components\FileUpload::make('thumbnail')
-                    ->image()
-                    ->disk('public')
-                    ->directory('projects')
-                    ->imageEditor(),
-
-                Forms\Components\FileUpload::make('erd')
-                    ->image()
-                    ->disk('public')
-                    ->directory('projects/erd'),
-
-                Forms\Components\FileUpload::make('flowchart')
-                    ->image()
-                    ->disk('public')
-                    ->directory('projects/flowcharts'),
-
-                Forms\Components\Toggle::make('is_active')
-                    ->default(true),
-
+                Forms\Components\Section::make('Status')
+                    ->schema([
+                        Forms\Components\Toggle::make('is_active')
+                            ->default(true),
+                    ]),
             ]);
     }
 
