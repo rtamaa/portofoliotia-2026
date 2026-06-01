@@ -229,19 +229,28 @@
             background:#111;
         }
 
+        .about-content {
+            flex: 1;
+            min-width: 500px;
+        }
+
         .about-image {
+            flex: 1;
             display: flex;
             justify-content: flex-end;
             align-items: center;
-            padding-right: 40px;
         }
 
         .about-image img {
-            width: 70%;
+            width: 100%;
             height: auto;
             border-radius: 12px;
         }
 
+        .about-content h2 {
+            white-space: nowrap;
+        }
+        
         .services-section{
             background:#0a0a0a;
         }
@@ -459,12 +468,10 @@
 
                 <div class="project-tags">
 
-                    @foreach($project->tags ?? [] as $tag)
-
+                    @foreach(explode(',', $project->tags ?? '') as $tag)
                         <span class="tag">
-                            {{ $tag }}
+                            {{ trim($tag) }}
                         </span>
-
                     @endforeach
 
                 </div>

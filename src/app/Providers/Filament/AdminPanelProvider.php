@@ -35,8 +35,6 @@ class AdminPanelProvider extends PanelProvider
 
             ->path('admin')
 
-            ->spa()
-
             ->login()
 
             ->passwordReset()

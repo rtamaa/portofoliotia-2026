@@ -160,11 +160,9 @@ resources/
 ├── views/
 
 
-# 📄 Informasi Lisensi
+## Lisensi
 
-Project ini menggunakan lisensi MIT.
-
-Silakan digunakan untuk pembelajaran maupun pengembangan pribadi.
+Project ini dibuat untuk tujuan pembelajaran dan portofolio.
 
 
 
