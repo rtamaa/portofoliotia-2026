@@ -1,4 +1,6 @@
 # Portofolio Tia
+Nama: Septiara Pratama
+Nim: 20240801027
 
 Website portfolio modern berbasis Laravel 12 dengan admin panel Filament v3 untuk mengelola project, services, social media, dan pengaturan landing page secara dinamis.
 
